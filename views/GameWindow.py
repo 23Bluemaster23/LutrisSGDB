@@ -54,7 +54,7 @@ class GameWindow(Gtk.Builder):
         self.icon_btn.set_image(ImageController.get_image(ImageType.ICON,self.slug_label.get_text()))
     def save_image(self,widget,event,parent):
         if parent.success:
-            SGDBAPIController.save_image(parent.selected_image,type=parent.type,slug=self.slug_label.get_text())
+            SGDBAPIController.save_image(parent.selected_url,type=parent.type,slug=self.slug_label.get_text())
             dg = CompletedDialog()
             dg.dialog.show_all()
             response = dg.dialog.run()

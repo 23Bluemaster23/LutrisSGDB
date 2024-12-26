@@ -1,7 +1,7 @@
 import sqlite3 as sq
 from controllers.FileSystem import ConfigController
-
-con = sq.connect(database=ConfigController.get_config('PATHS','db'))
+from pathlib import Path
+con = sq.connect(database=Path(ConfigController.get_config('PATHS','db')).expanduser())
 
 
 class SqliteDbModel:

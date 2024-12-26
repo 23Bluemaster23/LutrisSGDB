@@ -11,7 +11,7 @@ class FetchWindow(Gtk.Builder):
         super().__init__()
         self.id =id
         self.type = type
-        self.selected_image = None
+        self.selected_url = None
         self.add_from_file('templates/FetchingWindow.glade')
         self.window:Gtk.Window = self.get_object('FetchWindow')
         self.loading_box:Gtk.Box = self.get_object('loading_box')
@@ -26,7 +26,7 @@ class FetchWindow(Gtk.Builder):
             child.destroy()
         image_list = []
         for item in res:
-            image_list.append({"url":item['url'],"image":SGDBAPIController.get_url_thumbnail(item['thumb'],type=self.type)})
+            image_list.append({"url":item['url'],"image":SGDBAPIController.get_url_image(item['thumb'],type=self.type,mode='thumb')})
         GLib.idle_add(self.hide_loading)
         for image in image_list:
             GLib.idle_add(self.create_image_button,image)
@@ -41,7 +41,7 @@ class FetchWindow(Gtk.Builder):
         th.start()
     
     def on_image_pressed_button(self,widget):
-            self.selected_image = SGDBAPIController.get_url_image(widget.url,self.type)
+            self.selected_url = widget.url
             self.success = True
             self.window.close()
     

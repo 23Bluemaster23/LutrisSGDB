@@ -1,4 +1,4 @@
-CONFIG_PATH = 'config.ini'
+CONFIG_PATH = '~/.config/lutris-sgdb/config.ini'
 STYLES_PATH = 'resources/styles.css'
 DEFAULT_IMAGE_PATH = 'resources/images/default.png'
 class ImageType:

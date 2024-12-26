@@ -32,17 +32,35 @@ class SGDBAPIController:
             return formated_data
         
         return {'success':False,'msg':'Game Not Found'}
+    # @staticmethod
+    # def get_url_thumbnail(url:str,type:str):
+    #     image_res = SGDBAPIModel.get_url_image(url=url)
+    #     loader = GdkPixbuf.PixbufLoader()
+    #     match type:
+    #         case ImageType.ICON:
+    #             loader.set_size(ThumbnailSize.ICON['width'],ThumbnailSize.ICON['height'])
+    #         case ImageType.BANNER:
+    #             loader.set_size(ThumbnailSize.BANNER['width'],ThumbnailSize.BANNER['height'])
+    #         case ImageType.COVERART:
+    #             loader.set_size(ThumbnailSize.COVERART['width'],ThumbnailSize.COVERART['height'])
+    #     loader.write_bytes(GLib.Bytes.new(image_res['content']))
+    #     loader.close()
+
+    #     pifbuf = loader.get_pixbuf()
+    #     image  = Gtk.Image.new_from_pixbuf(pifbuf)
+    #     return image
     @staticmethod
-    def get_url_thumbnail(url:str,type:str):
+    def get_url_image(url:str,type:str,mode:str='image'):
+        image_size = ImageSize if mode == 'image' else ThumbnailSize
         image_res = SGDBAPIModel.get_url_image(url=url)
         loader = GdkPixbuf.PixbufLoader()
         match type:
             case ImageType.ICON:
-                loader.set_size(ThumbnailSize.ICON['width'],ThumbnailSize.ICON['height'])
+                loader.set_size(image_size.ICON['width'],image_size.ICON['height'])
             case ImageType.BANNER:
-                loader.set_size(ThumbnailSize.BANNER['width'],ThumbnailSize.BANNER['height'])
+                loader.set_size(image_size.BANNER['width'],image_size.BANNER['height'])
             case ImageType.COVERART:
-                loader.set_size(ThumbnailSize.COVERART['width'],ThumbnailSize.COVERART['height'])
+                loader.set_size(image_size.COVERART['width'],image_size.COVERART['height'])
         loader.write_bytes(GLib.Bytes.new(image_res['content']))
         loader.close()
 
@@ -50,25 +68,7 @@ class SGDBAPIController:
         image  = Gtk.Image.new_from_pixbuf(pifbuf)
         return image
     @staticmethod
-    def get_url_image(url:str,type:str):
-        image_res = SGDBAPIModel.get_url_image(url=url)
-        loader = GdkPixbuf.PixbufLoader()
-        match type:
-            case ImageType.ICON:
-                loader.set_size(ImageSize.ICON['width'],ImageSize.ICON['height'])
-            case ImageType.BANNER:
-                loader.set_size(ImageSize.BANNER['width'],ImageSize.BANNER['height'])
-            case ImageType.COVERART:
-                loader.set_size(ImageSize.COVERART['width'],ImageSize.COVERART['height'])
-        loader.write_bytes(GLib.Bytes.new(image_res['content']))
-        loader.close()
-
-        pifbuf = loader.get_pixbuf()
-        image  = Gtk.Image.new_from_pixbuf(pifbuf)
-        return image
-    @staticmethod
-    def save_image(image:Gtk.Image,slug,type):
-        pifbuf = image.get_pixbuf()
-        pifbuf.savev(ImageModel.get_image_path_for_save(type=type,slug=slug),ImageModel.get_filetype(type=type))
+    def save_image(url:str,slug,type):
+        SGDBAPIModel.save_image(url,slug,type)
     
    
