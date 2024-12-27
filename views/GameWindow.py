@@ -39,6 +39,8 @@ class GameWindow(Gtk.Builder):
         
         sw.window.connect('delete-event',self.open_fetching_window,sw)
         sw.window.present()
+        sw.window.set_modal(True)
+        sw.window.set_transient_for(self.window)
         sw.window.show_all()
         sw.loading_box.hide()
     def open_fetching_window(self,widget,event,parent):
@@ -46,6 +48,8 @@ class GameWindow(Gtk.Builder):
             fw = FetchWindow(parent.selected_id,parent.type)
             fw.window.connect('delete-event',self.save_image,fw)
             fw.window.present()
+            fw.window.set_modal(True)
+            fw.window.set_transient_for(self.window)
             fw.window.show_all()
             fw.loading_box.hide()
     def update_images(self):

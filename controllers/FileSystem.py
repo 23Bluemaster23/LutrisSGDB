@@ -10,6 +10,9 @@ class ConfigController:
     @staticmethod
     def set_config(section:str,key:str,value):
         ConfigModel.set_config(section=section,key=key,value=value)
+    @staticmethod
+    def save_config():
+        ConfigModel.save_config()
 
 class ImageController:
     @staticmethod
