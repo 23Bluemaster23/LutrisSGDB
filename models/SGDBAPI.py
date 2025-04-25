@@ -52,15 +52,15 @@ class SGDBAPIModel:
         data = BytesIO(res.content)
         image = Image.open(data)
         
-        if type in (ImageType.BANNER,ImageType.COVERART):
-            image = image.convert('RGB')
-
+      
         match type:
             case ImageType.ICON:
                 image = image.resize(ImageSize.ICON.values())
             case ImageType.BANNER:
+                image = image.convert('RGB')
                 image = image.resize(ImageSize.BANNER.values())
             case ImageType.COVERART:
+                image = image.convert('RGB')
                 image = image.resize(ImageSize.COVERART.values())
                 
         
